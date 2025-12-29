@@ -171,32 +171,22 @@ export function ApplicationWizard() {
               alignItems: "center",
             }}
           >
-            {/* Back to Home button - first in DOM for RTL (appears on right), second for LTR (appears on left) */}
-            {isRTL ? (
-              <Button
-                onClick={handleBackToHome}
-                variant="text"
-                sx={{
-                  gap: "8px",
-                  flexDirection: "row-reverse",
-                  "& .MuiButton-endIcon": {
+            {/* Back to Home button - Material UI automatically handles RTL for startIcon */}
+            <Button
+              onClick={handleBackToHome}
+              variant="text"
+              startIcon={<HomeIcon />}
+              sx={{
+                // Ensure proper spacing between icon and text in RTL
+                ...(isRTL && {
+                  "& .MuiButton-startIcon": {
                     marginLeft: "8px !important",
-                    marginRight: "0 !important",
                   },
-                }}
-              >
-                {t("backToHome")}
-                <HomeIcon />
-              </Button>
-            ) : (
-              <Button
-                onClick={handleBackToHome}
-                variant="text"
-                startIcon={<HomeIcon />}
-              >
-                {t("backToHome")}
-              </Button>
-            )}
+                }),
+              }}
+            >
+              {t("backToHome")}
+            </Button>
             {/* Back/Next buttons - second in DOM for RTL (appears on left), first for LTR (appears on right) */}
             <Box
               sx={{

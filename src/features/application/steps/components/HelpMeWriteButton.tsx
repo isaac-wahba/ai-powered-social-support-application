@@ -25,18 +25,17 @@ export function HelpMeWriteButton({
   return (
     <Button
       variant="outlined"
-      startIcon={!isRTL ? icon : undefined}
-      endIcon={isRTL ? icon : undefined}
+      startIcon={icon}
       onClick={onClick}
       disabled={disabled || loading}
       sx={{
         mt: 1,
         whiteSpace: "nowrap",
         flexShrink: 0,
+        // Ensure proper spacing between icon and text in RTL
         ...(isRTL && {
-          "& .MuiButton-endIcon": {
-            marginLeft: 0,
-            marginRight: "8px",
+          "& .MuiButton-startIcon": {
+            marginLeft: "8px !important",
           },
         }),
       }}
