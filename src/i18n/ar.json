@@ -65,5 +65,9 @@
   "housingStatusOwn": "ملك",
   "housingStatusRent": "إيجار",
   "housingStatusFamily": "يعيش مع العائلة",
-  "housingStatusOther": "أخرى"
+  "housingStatusOther": "أخرى",
+  "fieldCurrentFinancialSituation": "الوضع المالي الحالي",
+  "fieldEmploymentCircumstances": "ظروف التوظيف",
+  "fieldReasonForApplying": "سبب التقديم",
+  "helpMeWrite": "ساعدني في الكتابة"
 }

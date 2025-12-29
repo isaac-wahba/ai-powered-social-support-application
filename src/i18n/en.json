@@ -65,5 +65,9 @@
   "housingStatusOwn": "Own",
   "housingStatusRent": "Rent",
   "housingStatusFamily": "Living with Family",
-  "housingStatusOther": "Other"
+  "housingStatusOther": "Other",
+  "fieldCurrentFinancialSituation": "Current Financial Situation",
+  "fieldEmploymentCircumstances": "Employment Circumstances",
+  "fieldReasonForApplying": "Reason for Applying",
+  "helpMeWrite": "Help Me Write"
 }
