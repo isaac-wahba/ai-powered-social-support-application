@@ -95,8 +95,38 @@ export function ApplicationWizard() {
   }, []); // Only run once on mount
 
   const handleNext = async () => {
-    // Validate current step before proceeding
-    const isValid = await methods.trigger();
+    // Define fields for each step
+    const stepFields: Record<number, (keyof ApplicationFormData)[]> = {
+      0: [
+        "name",
+        "nationalId",
+        "dateOfBirth",
+        "gender",
+        "address",
+        "city",
+        "state",
+        "country",
+        "phone",
+        "email",
+      ],
+      1: [
+        "maritalStatus",
+        "dependents",
+        "employmentStatus",
+        "monthlyIncome",
+        "housingStatus",
+      ],
+      2: [
+        "currentFinancialSituation",
+        "employmentCircumstances",
+        "reasonForApplying",
+      ],
+    };
+
+    // Validate only current step fields
+    const fieldsToValidate = stepFields[activeStep] || [];
+    const isValid = await methods.trigger(fieldsToValidate);
+
     if (isValid) {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
