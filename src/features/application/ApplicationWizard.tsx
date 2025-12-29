@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Box,
@@ -10,6 +11,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
+import { Home as HomeIcon } from "@mui/icons-material";
 import { Step1PersonalInfo } from "./steps/Step1PersonalInfo";
 import { Step2FinancialInfo } from "./steps/Step2FinancialInfo";
 import { Step3Situation } from "./steps/Step3Situation";
@@ -18,6 +20,7 @@ const steps = ["step1", "step2", "step3"];
 
 export function ApplicationWizard() {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const isRTL = i18n.language === "ar";
 
@@ -27,6 +30,10 @@ export function ApplicationWizard() {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleBackToHome = () => {
+    navigate("/");
   };
 
   const renderStepContent = (step: number) => {
@@ -70,21 +77,86 @@ export function ApplicationWizard() {
           {renderStepContent(activeStep)}
         </Box>
 
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Button
-            disabled={activeStep === 0}
-            onClick={handleBack}
-            variant="outlined"
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: isRTL ? "row-reverse" : "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          {/* Back to Home button - first in DOM for RTL (appears on right), second for LTR (appears on left) */}
+          {isRTL ? (
+            <Button
+              onClick={handleBackToHome}
+              variant="text"
+              sx={{
+                gap: "8px",
+                flexDirection: "row-reverse",
+                "& .MuiButton-endIcon": {
+                  marginLeft: "8px !important",
+                  marginRight: "0 !important",
+                },
+              }}
+            >
+              {t("backToHome")}
+              <HomeIcon />
+            </Button>
+          ) : (
+            <Button
+              onClick={handleBackToHome}
+              variant="text"
+              startIcon={<HomeIcon />}
+            >
+              {t("backToHome")}
+            </Button>
+          )}
+          {/* Back/Next buttons - second in DOM for RTL (appears on left), first for LTR (appears on right) */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 2,
+            }}
           >
-            {t("back")}
-          </Button>
-          <Button
-            variant="contained"
-            onClick={handleNext}
-            disabled={activeStep === steps.length - 1}
-          >
-            {t("next")}
-          </Button>
+            {/* In RTL: Next first (appears first on left), Back second (appears second on left) */}
+            {/* In LTR: Back first (appears first on right), Next second (appears second on right) */}
+            {isRTL ? (
+              <>
+                <Button
+                  variant="contained"
+                  onClick={handleNext}
+                  disabled={activeStep === steps.length - 1}
+                >
+                  {t("next")}
+                </Button>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  variant="outlined"
+                >
+                  {t("back")}
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  variant="outlined"
+                >
+                  {t("back")}
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={handleNext}
+                  disabled={activeStep === steps.length - 1}
+                >
+                  {t("next")}
+                </Button>
+              </>
+            )}
+          </Box>
         </Box>
       </Paper>
     </Container>

@@ -1,45 +1,20 @@
-import { useTranslation } from "react-i18next";
-import { AppBar, Toolbar, Typography } from "@mui/material";
-import { LanguageSwitcher } from "./components/LanguageSwitcher";
-import { ApplicationWizard } from "./features/application/ApplicationWizard";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Layout } from "./components/Layout";
+import { Home } from "./pages/Home";
+import { Application } from "./pages/Application";
 import "./i18n";
 
 function App() {
-  const { t } = useTranslation();
-
   return (
-    <>
-      <AppBar
-        position="static"
-        elevation={2}
-        sx={{
-          width: "100%",
-          backgroundColor: (theme) => theme.palette.primary.main,
-          borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
-        }}
-      >
-        <Toolbar
-          sx={{
-            px: { xs: 2, sm: 3 },
-            minHeight: { xs: 56, sm: 64 },
-          }}
-        >
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{
-              flexGrow: 1,
-              fontWeight: 600,
-              letterSpacing: 0.5,
-            }}
-          >
-            {t("welcome")}
-          </Typography>
-          <LanguageSwitcher />
-        </Toolbar>
-      </AppBar>
-      <ApplicationWizard />
-    </>
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/application" element={<Application />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   );
 }
 
