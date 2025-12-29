@@ -20,6 +20,7 @@ import { Step3Situation } from "./steps/Step3Situation";
 import { applicationFormSchema, type ApplicationFormData } from "./schema";
 import { storage } from "./storage";
 import { useFormAutoSave } from "../../hooks/useFormAutoSave";
+import { ApplicationStep, TOTAL_STEPS } from "./constants/steps";
 
 const steps = ["step1", "step2", "step3"];
 
@@ -47,7 +48,12 @@ const defaultValues: Partial<ApplicationFormData> = {
 export function ApplicationWizard() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const [activeStep, setActiveStep] = useState(0);
+
+  // Load saved step on mount, default to first step if not found
+  const savedStep = storage.loadStep();
+  const [activeStep, setActiveStep] = useState<ApplicationStep>(
+    (savedStep as ApplicationStep) ?? ApplicationStep.PERSONAL_INFO
+  );
   const isRTL = i18n.language === "ar";
 
   // Load saved data on mount
@@ -75,10 +81,17 @@ export function ApplicationWizard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Only run once on mount
 
+  // Clear step when navigating away from the application page
+  useEffect(() => {
+    return () => {
+      storage.saveStep(ApplicationStep.PERSONAL_INFO); // Reset to first step when component unmounts
+    };
+  }, []);
+
   const handleNext = async () => {
     // Define fields for each step
-    const stepFields: Record<number, (keyof ApplicationFormData)[]> = {
-      0: [
+    const stepFields: Record<ApplicationStep, (keyof ApplicationFormData)[]> = {
+      [ApplicationStep.PERSONAL_INFO]: [
         "name",
         "nationalId",
         "dateOfBirth",
@@ -90,14 +103,14 @@ export function ApplicationWizard() {
         "phone",
         "email",
       ],
-      1: [
+      [ApplicationStep.FINANCIAL_INFO]: [
         "maritalStatus",
         "dependents",
         "employmentStatus",
         "monthlyIncome",
         "housingStatus",
       ],
-      2: [
+      [ApplicationStep.SITUATION]: [
         "currentFinancialSituation",
         "employmentCircumstances",
         "reasonForApplying",
@@ -109,25 +122,30 @@ export function ApplicationWizard() {
     const isValid = await methods.trigger(fieldsToValidate);
 
     if (isValid) {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      const nextStep = (activeStep + 1) as ApplicationStep;
+      setActiveStep(nextStep);
+      storage.saveStep(nextStep);
     }
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    const prevStep = (activeStep - 1) as ApplicationStep;
+    setActiveStep(prevStep);
+    storage.saveStep(prevStep);
   };
 
   const handleBackToHome = () => {
+    storage.saveStep(ApplicationStep.PERSONAL_INFO); // Reset to first step
     navigate("/");
   };
 
-  const renderStepContent = (step: number) => {
+  const renderStepContent = (step: ApplicationStep) => {
     switch (step) {
-      case 0:
+      case ApplicationStep.PERSONAL_INFO:
         return <Step1PersonalInfo />;
-      case 1:
+      case ApplicationStep.FINANCIAL_INFO:
         return <Step2FinancialInfo />;
-      case 2:
+      case ApplicationStep.SITUATION:
         return <Step3Situation />;
       default:
         return null;
@@ -202,12 +220,12 @@ export function ApplicationWizard() {
                   <Button
                     variant="contained"
                     onClick={handleNext}
-                    disabled={activeStep === steps.length - 1}
+                    disabled={activeStep === TOTAL_STEPS - 1}
                   >
                     {t("next")}
                   </Button>
                   <Button
-                    disabled={activeStep === 0}
+                    disabled={activeStep === ApplicationStep.PERSONAL_INFO}
                     onClick={handleBack}
                     variant="outlined"
                   >
@@ -217,7 +235,7 @@ export function ApplicationWizard() {
               ) : (
                 <>
                   <Button
-                    disabled={activeStep === 0}
+                    disabled={activeStep === ApplicationStep.PERSONAL_INFO}
                     onClick={handleBack}
                     variant="outlined"
                   >
@@ -226,7 +244,7 @@ export function ApplicationWizard() {
                   <Button
                     variant="contained"
                     onClick={handleNext}
-                    disabled={activeStep === steps.length - 1}
+                    disabled={activeStep === TOTAL_STEPS - 1}
                   >
                     {t("next")}
                   </Button>
