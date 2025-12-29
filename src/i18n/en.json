@@ -2,6 +2,13 @@
   "language": "Language",
   "english": "English",
   "arabic": "Arabic",
-  "welcome": "Welcome to Social Support Portal"
+  "welcome": "Welcome to Social Support Portal",
+  "step1": "Personal Information",
+  "step2": "Family & Financial Info",
+  "step3": "Situation Description",
+  "next": "Next",
+  "back": "Back",
+  "step1Placeholder": "Personal information form will go here",
+  "step2Placeholder": "Family and financial information form will go here",
+  "step3Placeholder": "Situation description form will go here"
 }
-
