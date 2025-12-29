@@ -69,5 +69,7 @@
   "fieldCurrentFinancialSituation": "الوضع المالي الحالي",
   "fieldEmploymentCircumstances": "ظروف التوظيف",
   "fieldReasonForApplying": "سبب التقديم",
-  "helpMeWrite": "ساعدني في الكتابة"
+  "helpMeWrite": "ساعدني في الكتابة",
+  "aiErrorUnknown": "حدث خطأ أثناء إنشاء النص. يرجى المحاولة مرة أخرى.",
+  "aiGenerating": "جاري الإنشاء..."
 }

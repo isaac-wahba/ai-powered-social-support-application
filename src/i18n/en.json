@@ -69,5 +69,7 @@
   "fieldCurrentFinancialSituation": "Current Financial Situation",
   "fieldEmploymentCircumstances": "Employment Circumstances",
   "fieldReasonForApplying": "Reason for Applying",
-  "helpMeWrite": "Help Me Write"
+  "helpMeWrite": "Help Me Write",
+  "aiErrorUnknown": "An error occurred while generating text. Please try again.",
+  "aiGenerating": "Generating..."
 }
