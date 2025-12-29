@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
@@ -19,6 +19,7 @@ import { Step2FinancialInfo } from "./steps/Step2FinancialInfo";
 import { Step3Situation } from "./steps/Step3Situation";
 import { applicationFormSchema, type ApplicationFormData } from "./schema";
 import { storage } from "./storage";
+import { useFormAutoSave } from "../../hooks/useFormAutoSave";
 
 const steps = ["step1", "step2", "step3"];
 
@@ -62,29 +63,9 @@ export function ApplicationWizard() {
   });
 
   const { watch, reset } = methods;
-  const timeoutRef = useRef<number | null>(null);
 
   // Auto-save with debounce
-  useEffect(() => {
-    const subscription = watch((data) => {
-      // Clear previous timeout
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-
-      // Set new timeout for debounced save
-      timeoutRef.current = setTimeout(() => {
-        storage.save(data);
-      }, 500); // 500ms debounce
-    });
-
-    return () => {
-      subscription.unsubscribe();
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, [watch]);
+  useFormAutoSave(watch);
 
   // Restore saved data on mount
   useEffect(() => {

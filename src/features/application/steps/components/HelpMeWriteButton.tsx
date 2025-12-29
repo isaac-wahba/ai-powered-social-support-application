@@ -8,6 +8,10 @@ interface HelpMeWriteButtonProps {
   disabled?: boolean;
 }
 
+/**
+ * Button component for triggering AI text generation
+ * Automatically handles RTL layout for icon positioning
+ */
 export function HelpMeWriteButton({
   loading,
   onClick,
@@ -16,27 +20,17 @@ export function HelpMeWriteButton({
   const { t, i18n } = useTranslation();
   const isRTL = i18n.language === "ar";
 
+  const icon = loading ? (
+    <CircularProgress size={16} />
+  ) : (
+    <AutoFixHighIcon />
+  );
+
   return (
     <Button
       variant="outlined"
-      startIcon={
-        !isRTL ? (
-          loading ? (
-            <CircularProgress size={16} />
-          ) : (
-            <AutoFixHighIcon />
-          )
-        ) : undefined
-      }
-      endIcon={
-        isRTL ? (
-          loading ? (
-            <CircularProgress size={16} />
-          ) : (
-            <AutoFixHighIcon />
-          )
-        ) : undefined
-      }
+      startIcon={!isRTL ? icon : undefined}
+      endIcon={isRTL ? icon : undefined}
       onClick={onClick}
       disabled={disabled || loading}
       sx={{
