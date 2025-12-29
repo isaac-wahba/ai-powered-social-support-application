@@ -1,35 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useTranslation } from "react-i18next";
+import { Container, Box, Typography, AppBar, Toolbar } from "@mui/material";
+import { LanguageSwitcher } from "./components/LanguageSwitcher";
+import "./i18n";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { t, i18n } = useTranslation();
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <AppBar
+        position="static"
+        elevation={2}
+        sx={{
+          width: "100%",
+          backgroundColor: (theme) => theme.palette.primary.main,
+          borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
+        }}
+      >
+        <Toolbar
+          sx={{
+            px: { xs: 2, sm: 3 },
+            minHeight: { xs: 56, sm: 64 },
+          }}
+        >
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              flexGrow: 1,
+              fontWeight: 600,
+              letterSpacing: 0.5,
+            }}
+          >
+            {t("welcome")}
+          </Typography>
+          <LanguageSwitcher />
+        </Toolbar>
+      </AppBar>
+      <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
+        <Box sx={{ textAlign: "center" }}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            {t("welcome")}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            {t("language")}: {t(i18n.language === "en" ? "english" : "arabic")}
+          </Typography>
+        </Box>
+      </Container>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
