@@ -28,6 +28,7 @@ export function ApplicationWizard() {
     activeStep,
     setActiveStep,
     trigger: methods.trigger,
+    clearErrors: methods.clearErrors,
   });
 
   // Save step to localStorage when it changes
@@ -64,6 +65,7 @@ export function ApplicationWizard() {
             <StartOverButton
               onStepReset={handleStepReset}
               resetForm={methods.reset}
+              clearErrors={methods.clearErrors}
             />
           </Box>
 
