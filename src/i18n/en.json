@@ -71,5 +71,9 @@
   "fieldReasonForApplying": "Reason for Applying",
   "helpMeWrite": "Help Me Write",
   "aiErrorUnknown": "An error occurred while generating text. Please try again.",
-  "aiGenerating": "Generating..."
+  "aiGenerating": "Generating...",
+  "startOver": "Start Over",
+  "startOverConfirm": "Are you sure you want to start over? This will clear all your progress.",
+  "cancel": "Cancel",
+  "confirm": "Confirm"
 }

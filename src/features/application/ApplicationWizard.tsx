@@ -9,6 +9,7 @@ import { ApplicationStep } from "./constants/steps";
 import { StepContent } from "./components/StepContent";
 import { WizardStepper } from "./components/WizardStepper";
 import { WizardNavigation } from "./components/WizardNavigation";
+import { StartOverButton } from "./components/StartOverButton";
 
 export function ApplicationWizard() {
   const { t } = useTranslation();
@@ -41,13 +42,30 @@ export function ApplicationWizard() {
     };
   }, []);
 
+  const handleStepReset = () => {
+    setActiveStep(ApplicationStep.PERSONAL_INFO);
+  };
+
   return (
     <FormProvider {...methods}>
       <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
         <Paper elevation={2} sx={{ p: 4 }}>
-          <Typography variant="h4" component="h1" gutterBottom align="center">
-            {t("welcome")}
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mb: 2,
+            }}
+          >
+            <Typography variant="h4" component="h1">
+              {t("welcome")}
+            </Typography>
+            <StartOverButton
+              onStepReset={handleStepReset}
+              resetForm={methods.reset}
+            />
+          </Box>
 
           <WizardStepper activeStep={activeStep} />
 

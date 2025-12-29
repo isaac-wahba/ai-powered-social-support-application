@@ -71,5 +71,9 @@
   "fieldReasonForApplying": "سبب التقديم",
   "helpMeWrite": "ساعدني في الكتابة",
   "aiErrorUnknown": "حدث خطأ أثناء إنشاء النص. يرجى المحاولة مرة أخرى.",
-  "aiGenerating": "جاري الإنشاء..."
+  "aiGenerating": "جاري الإنشاء...",
+  "startOver": "ابدأ من جديد",
+  "startOverConfirm": "هل أنت متأكد أنك تريد البدء من جديد؟ سيتم مسح جميع تقدمك.",
+  "cancel": "إلغاء",
+  "confirm": "تأكيد"
 }
