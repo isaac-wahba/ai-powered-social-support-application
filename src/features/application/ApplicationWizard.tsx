@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { useForm, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Container,
   Box,
@@ -15,8 +17,31 @@ import { Home as HomeIcon } from "@mui/icons-material";
 import { Step1PersonalInfo } from "./steps/Step1PersonalInfo";
 import { Step2FinancialInfo } from "./steps/Step2FinancialInfo";
 import { Step3Situation } from "./steps/Step3Situation";
+import { applicationFormSchema, type ApplicationFormData } from "./schema";
+import { storage } from "./storage";
 
 const steps = ["step1", "step2", "step3"];
+
+const defaultValues: Partial<ApplicationFormData> = {
+  name: "",
+  nationalId: "",
+  dateOfBirth: "",
+  gender: "",
+  address: "",
+  city: "",
+  state: "",
+  country: "",
+  phone: "",
+  email: "",
+  maritalStatus: "",
+  dependents: 0,
+  employmentStatus: "",
+  monthlyIncome: 0,
+  housingStatus: "",
+  currentFinancialSituation: "",
+  employmentCircumstances: "",
+  reasonForApplying: "",
+};
 
 export function ApplicationWizard() {
   const { t, i18n } = useTranslation();
@@ -24,8 +49,57 @@ export function ApplicationWizard() {
   const [activeStep, setActiveStep] = useState(0);
   const isRTL = i18n.language === "ar";
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  // Load saved data on mount
+  const savedData = storage.load();
+  const initialValues = savedData
+    ? { ...defaultValues, ...savedData }
+    : defaultValues;
+
+  const methods = useForm<ApplicationFormData>({
+    resolver: zodResolver(applicationFormSchema),
+    defaultValues: initialValues,
+    mode: "onChange",
+  });
+
+  const { watch, reset } = methods;
+  const timeoutRef = useRef<number | null>(null);
+
+  // Auto-save with debounce
+  useEffect(() => {
+    const subscription = watch((data) => {
+      // Clear previous timeout
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      // Set new timeout for debounced save
+      timeoutRef.current = setTimeout(() => {
+        storage.save(data);
+      }, 500); // 500ms debounce
+    });
+
+    return () => {
+      subscription.unsubscribe();
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [watch]);
+
+  // Restore saved data on mount
+  useEffect(() => {
+    if (savedData) {
+      reset(initialValues);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run once on mount
+
+  const handleNext = async () => {
+    // Validate current step before proceeding
+    const isValid = await methods.trigger();
+    if (isValid) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
   };
 
   const handleBack = () => {
@@ -50,115 +124,117 @@ export function ApplicationWizard() {
   };
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
-      <Paper elevation={2} sx={{ p: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom align="center">
-          {t("welcome")}
-        </Typography>
+    <FormProvider {...methods}>
+      <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
+        <Paper elevation={2} sx={{ p: 4 }}>
+          <Typography variant="h4" component="h1" gutterBottom align="center">
+            {t("welcome")}
+          </Typography>
 
-        <Stepper activeStep={activeStep} sx={{ mt: 4, mb: 4 }}>
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel
-                sx={{
-                  "& .MuiStepLabel-label": {
-                    marginLeft: isRTL ? 0 : "8px",
-                    marginRight: isRTL ? "8px" : 0,
-                  },
-                }}
-              >
-                {t(label)}
-              </StepLabel>
-            </Step>
-          ))}
-        </Stepper>
+          <Stepper activeStep={activeStep} sx={{ mt: 4, mb: 4 }}>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel
+                  sx={{
+                    "& .MuiStepLabel-label": {
+                      marginLeft: isRTL ? 0 : "8px",
+                      marginRight: isRTL ? "8px" : 0,
+                    },
+                  }}
+                >
+                  {t(label)}
+                </StepLabel>
+              </Step>
+            ))}
+          </Stepper>
 
-        <Box sx={{ minHeight: 200, mb: 4 }}>
-          {renderStepContent(activeStep)}
-        </Box>
+          <Box sx={{ minHeight: 200, mb: 4 }}>
+            {renderStepContent(activeStep)}
+          </Box>
 
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: isRTL ? "row-reverse" : "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          {/* Back to Home button - first in DOM for RTL (appears on right), second for LTR (appears on left) */}
-          {isRTL ? (
-            <Button
-              onClick={handleBackToHome}
-              variant="text"
-              sx={{
-                gap: "8px",
-                flexDirection: "row-reverse",
-                "& .MuiButton-endIcon": {
-                  marginLeft: "8px !important",
-                  marginRight: "0 !important",
-                },
-              }}
-            >
-              {t("backToHome")}
-              <HomeIcon />
-            </Button>
-          ) : (
-            <Button
-              onClick={handleBackToHome}
-              variant="text"
-              startIcon={<HomeIcon />}
-            >
-              {t("backToHome")}
-            </Button>
-          )}
-          {/* Back/Next buttons - second in DOM for RTL (appears on left), first for LTR (appears on right) */}
           <Box
             sx={{
               display: "flex",
-              flexDirection: "row",
-              gap: 2,
+              flexDirection: isRTL ? "row-reverse" : "row",
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
-            {/* In RTL: Next first (appears first on left), Back second (appears second on left) */}
-            {/* In LTR: Back first (appears first on right), Next second (appears second on right) */}
+            {/* Back to Home button - first in DOM for RTL (appears on right), second for LTR (appears on left) */}
             {isRTL ? (
-              <>
-                <Button
-                  variant="contained"
-                  onClick={handleNext}
-                  disabled={activeStep === steps.length - 1}
-                >
-                  {t("next")}
-                </Button>
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  variant="outlined"
-                >
-                  {t("back")}
-                </Button>
-              </>
+              <Button
+                onClick={handleBackToHome}
+                variant="text"
+                sx={{
+                  gap: "8px",
+                  flexDirection: "row-reverse",
+                  "& .MuiButton-endIcon": {
+                    marginLeft: "8px !important",
+                    marginRight: "0 !important",
+                  },
+                }}
+              >
+                {t("backToHome")}
+                <HomeIcon />
+              </Button>
             ) : (
-              <>
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  variant="outlined"
-                >
-                  {t("back")}
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={handleNext}
-                  disabled={activeStep === steps.length - 1}
-                >
-                  {t("next")}
-                </Button>
-              </>
+              <Button
+                onClick={handleBackToHome}
+                variant="text"
+                startIcon={<HomeIcon />}
+              >
+                {t("backToHome")}
+              </Button>
             )}
+            {/* Back/Next buttons - second in DOM for RTL (appears on left), first for LTR (appears on right) */}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                gap: 2,
+              }}
+            >
+              {/* In RTL: Next first (appears first on left), Back second (appears second on left) */}
+              {/* In LTR: Back first (appears first on right), Next second (appears second on right) */}
+              {isRTL ? (
+                <>
+                  <Button
+                    variant="contained"
+                    onClick={handleNext}
+                    disabled={activeStep === steps.length - 1}
+                  >
+                    {t("next")}
+                  </Button>
+                  <Button
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    variant="outlined"
+                  >
+                    {t("back")}
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    variant="outlined"
+                  >
+                    {t("back")}
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={handleNext}
+                    disabled={activeStep === steps.length - 1}
+                  >
+                    {t("next")}
+                  </Button>
+                </>
+              )}
+            </Box>
           </Box>
-        </Box>
-      </Paper>
-    </Container>
+        </Paper>
+      </Container>
+    </FormProvider>
   );
 }
