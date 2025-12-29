@@ -20,11 +20,7 @@ export function HelpMeWriteButton({
   const { t, i18n } = useTranslation();
   const isRTL = i18n.language === "ar";
 
-  const icon = loading ? (
-    <CircularProgress size={16} />
-  ) : (
-    <AutoFixHighIcon />
-  );
+  const icon = loading ? <CircularProgress size={16} /> : <AutoFixHighIcon />;
 
   return (
     <Button
@@ -37,6 +33,12 @@ export function HelpMeWriteButton({
         mt: 1,
         whiteSpace: "nowrap",
         flexShrink: 0,
+        ...(isRTL && {
+          "& .MuiButton-endIcon": {
+            marginLeft: 0,
+            marginRight: "8px",
+          },
+        }),
       }}
     >
       {loading ? t("aiGenerating") : t("helpMeWrite")}
