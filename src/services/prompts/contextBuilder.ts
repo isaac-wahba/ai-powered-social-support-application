@@ -13,6 +13,50 @@ export function buildFormContext(
   const isArabic = language === "ar";
   const contextParts: string[] = [];
 
+  // Personal information (name excluded for privacy)
+  if (formContext.age !== undefined) {
+    if (isArabic) {
+      contextParts.push(`العمر: ${formContext.age} سنة`);
+    } else {
+      contextParts.push(`Age: ${formContext.age} years old`);
+    }
+  }
+
+  if (formContext.gender) {
+    const translatedGender = translateFormValue(
+      "gender",
+      formContext.gender,
+      language
+    );
+    if (isArabic) {
+      contextParts.push(`النوع: ${translatedGender}`);
+    } else {
+      contextParts.push(`Gender: ${translatedGender}`);
+    }
+  }
+
+  // Family & Financial information
+  if (formContext.maritalStatus) {
+    const translatedStatus = translateFormValue(
+      "maritalStatus",
+      formContext.maritalStatus,
+      language
+    );
+    if (isArabic) {
+      contextParts.push(`الحالة الاجتماعية: ${translatedStatus}`);
+    } else {
+      contextParts.push(`Marital status: ${translatedStatus}`);
+    }
+  }
+
+  if (formContext.dependents !== undefined) {
+    if (isArabic) {
+      contextParts.push(`عدد المعالين: ${formContext.dependents}`);
+    } else {
+      contextParts.push(`Number of dependents: ${formContext.dependents}`);
+    }
+  }
+
   if (formContext.employmentStatus) {
     const translatedStatus = translateFormValue(
       "employmentStatus",
@@ -34,24 +78,16 @@ export function buildFormContext(
     }
   }
 
-  if (formContext.dependents !== undefined) {
-    if (isArabic) {
-      contextParts.push(`عدد المعالين: ${formContext.dependents}`);
-    } else {
-      contextParts.push(`Number of dependents: ${formContext.dependents}`);
-    }
-  }
-
-  if (formContext.maritalStatus) {
+  if (formContext.housingStatus) {
     const translatedStatus = translateFormValue(
-      "maritalStatus",
-      formContext.maritalStatus,
+      "housingStatus",
+      formContext.housingStatus,
       language
     );
     if (isArabic) {
-      contextParts.push(`الحالة الاجتماعية: ${translatedStatus}`);
+      contextParts.push(`حالة السكن: ${translatedStatus}`);
     } else {
-      contextParts.push(`Marital status: ${translatedStatus}`);
+      contextParts.push(`Housing status: ${translatedStatus}`);
     }
   }
 
