@@ -14,7 +14,8 @@ type FieldType =
 
 export function Step3Situation() {
   const { t, i18n } = useTranslation();
-  const { watch, setValue } = useFormContext<ApplicationFormData>();
+  const { watch, setValue, clearErrors } =
+    useFormContext<ApplicationFormData>();
   const isRTL = i18n.language === "ar";
   const { loading, error, generateText, clearError } = useAITextGeneration();
 
@@ -23,7 +24,12 @@ export function Step3Situation() {
   const handleHelpMeWrite = async (fieldName: FieldType) => {
     const generatedText = await generateText(fieldName, formData);
     if (generatedText) {
-      setValue(fieldName, generatedText);
+      setValue(fieldName, generatedText, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+      // Explicitly clear any existing errors for this field
+      clearErrors(fieldName);
     }
   };
 
