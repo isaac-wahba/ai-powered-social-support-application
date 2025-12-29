@@ -1,7 +1,8 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { RHFTextField } from "../../../components/RHFTextField";
 import { RHFSelect } from "../../../components/RHFSelect";
+import { StepLayout } from "./StepLayout";
 
 export function Step1PersonalInfo() {
   const { t } = useTranslation();
@@ -24,22 +25,7 @@ export function Step1PersonalInfo() {
   ];
 
   return (
-    <Box sx={{ mt: 3 }}>
-      <Typography variant="h6" gutterBottom>
-        {t("step1")}
-      </Typography>
-
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: {
-            xs: "1fr",
-            sm: "repeat(2, 1fr)",
-          },
-          gap: 3,
-          mt: 1,
-        }}
-      >
+    <StepLayout stepKey="step1">
         <RHFTextField name="name" label={t("fieldName")} required />
 
         <RHFTextField name="nationalId" label={t("fieldNationalId")} required />
@@ -89,7 +75,6 @@ export function Step1PersonalInfo() {
           type="email"
           required
         />
-      </Box>
-    </Box>
+    </StepLayout>
   );
 }
