@@ -50,6 +50,7 @@ export function WizardNavigation({
         variant="text"
         startIcon={<HomeIcon />}
         disabled={isSubmitting}
+        aria-label={t("backToHome")}
         sx={{
           width: { xs: isLastStep ? "auto" : "100%", sm: "auto" },
           minHeight: { xs: "44px", sm: "auto" },
@@ -76,9 +77,10 @@ export function WizardNavigation({
             variant="contained"
             onClick={onSubmit}
             disabled={isSubmitting}
+            aria-label={isSubmitting ? t("submitting") : t("submitApplication")}
             startIcon={
               isSubmitting ? (
-                <CircularProgress size={16} color="inherit" />
+                <CircularProgress size={16} color="inherit" aria-hidden="true" />
               ) : undefined
             }
             sx={{
@@ -94,6 +96,7 @@ export function WizardNavigation({
               variant="contained"
               onClick={onNext}
               disabled={!canGoNext || isSubmitting}
+              aria-label={t("nextStep")}
               sx={{
                 width: { xs: "100%", sm: "auto" },
                 minHeight: { xs: "44px", sm: "auto" },
@@ -105,6 +108,7 @@ export function WizardNavigation({
               disabled={!canGoBack || isSubmitting}
               onClick={onBack}
               variant="outlined"
+              aria-label={t("previousStep")}
               sx={{
                 width: { xs: "100%", sm: "auto" },
                 minHeight: { xs: "44px", sm: "auto" },
@@ -119,6 +123,7 @@ export function WizardNavigation({
               disabled={!canGoBack || isSubmitting}
               onClick={onBack}
               variant="outlined"
+              aria-label={t("previousStep")}
               sx={{
                 width: { xs: "100%", sm: "auto" },
                 minHeight: { xs: "44px", sm: "auto" },
@@ -130,6 +135,7 @@ export function WizardNavigation({
               variant="contained"
               onClick={onNext}
               disabled={!canGoNext || isSubmitting}
+              aria-label={t("nextStep")}
               sx={{
                 width: { xs: "100%", sm: "auto" },
                 minHeight: { xs: "44px", sm: "auto" },

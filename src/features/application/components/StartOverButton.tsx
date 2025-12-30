@@ -48,8 +48,9 @@ export function StartOverButton({
       <Button
         variant="text"
         color="inherit"
-        startIcon={<RefreshIcon />}
+        startIcon={<RefreshIcon aria-hidden="true" />}
         onClick={handleOpenDialog}
+        aria-label={t("startOver")}
         sx={{
           textTransform: "none",
           fontSize: "0.875rem",
@@ -63,13 +64,10 @@ export function StartOverButton({
             border: "none",
             boxShadow: "none",
           },
-          "&:focus": {
-            border: "none",
-            boxShadow: "none",
-            outline: "none",
-          },
           "&:focus-visible": {
-            outline: "none",
+            outline: "2px solid",
+            outlineColor: "primary.main",
+            outlineOffset: "2px",
           },
           ...(isRTL && {
             "& .MuiButton-startIcon": {

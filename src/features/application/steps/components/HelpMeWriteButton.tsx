@@ -20,19 +20,29 @@ export function HelpMeWriteButton({
   const { t, i18n } = useTranslation();
   const isRTL = i18n.language === "ar";
 
-  const icon = loading ? <CircularProgress size={16} /> : <AutoFixHighIcon />;
-
   return (
     <Button
       variant="outlined"
-      startIcon={icon}
+      startIcon={
+        loading ? (
+          <CircularProgress size={16} aria-hidden="true" />
+        ) : (
+          <AutoFixHighIcon aria-hidden="true" />
+        )
+      }
       onClick={onClick}
       disabled={disabled || loading}
+      aria-label={loading ? t("aiGenerating") : t("helpMeWrite")}
+      aria-busy={loading}
       sx={{
         mt: 1,
         whiteSpace: "nowrap",
         flexShrink: 0,
-        // Ensure proper spacing between icon and text in RTL
+        "&:focus-visible": {
+          outline: "2px solid",
+          outlineColor: "primary.main",
+          outlineOffset: "2px",
+        },
         ...(isRTL && {
           "& .MuiButton-startIcon": {
             marginLeft: "8px !important",

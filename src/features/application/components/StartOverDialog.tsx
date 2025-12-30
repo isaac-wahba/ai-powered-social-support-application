@@ -53,6 +53,7 @@ export function StartOverDialog({
         <Button
           onClick={onClose}
           color="secondary"
+          aria-label={t("cancel")}
           sx={{
             width: { xs: "100%", sm: "auto" },
             minHeight: { xs: "44px", sm: "auto" },
@@ -65,6 +66,7 @@ export function StartOverDialog({
           variant="contained"
           color="primary"
           autoFocus
+          aria-label={t("confirm")}
           sx={{
             width: { xs: "100%", sm: "auto" },
             minHeight: { xs: "44px", sm: "auto" },

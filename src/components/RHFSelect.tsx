@@ -23,6 +23,9 @@ export function RHFSelect({ name, label, options, ...other }: RHFSelectProps) {
             {...other}
             labelId={`${name}-label`}
             label={label}
+            aria-invalid={!!error}
+            aria-describedby={error ? `${name}-error-text` : undefined}
+            aria-required={other.required}
           >
             {options.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -30,7 +33,11 @@ export function RHFSelect({ name, label, options, ...other }: RHFSelectProps) {
               </MenuItem>
             ))}
           </Select>
-          {error && <FormHelperText>{error.message}</FormHelperText>}
+          {error && (
+            <FormHelperText id={`${name}-error-text`} role="alert">
+              {error.message}
+            </FormHelperText>
+          )}
         </FormControl>
       )}
     />

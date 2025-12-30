@@ -83,5 +83,12 @@
   "submissionError": "فشل الإرسال",
   "submissionErrorMessage": "حدث خطأ أثناء إرسال طلبك. يرجى المحاولة مرة أخرى.",
   "fillNewApplication": "ملء طلب جديد",
-  "goToHome": "الذهاب إلى الصفحة الرئيسية"
+  "goToHome": "الذهاب إلى الصفحة الرئيسية",
+  "skipToMainContent": "تخطي إلى المحتوى الرئيسي",
+  "applicationForm": "نموذج التقديم",
+  "applicationSteps": "خطوات التقديم",
+  "step": "خطوة",
+  "submitApplication": "إرسال الطلب",
+  "nextStep": "الانتقال إلى الخطوة التالية",
+  "previousStep": "الانتقال إلى الخطوة السابقة"
 }

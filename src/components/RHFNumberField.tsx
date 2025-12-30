@@ -27,9 +27,26 @@ export function RHFNumberField({
           error={!!error}
           helperText={error?.message || helperText}
           fullWidth
+          aria-invalid={!!error}
+          aria-describedby={
+            error || helperText
+              ? `${name}-${error ? "error" : "helper"}-text`
+              : undefined
+          }
+          slotProps={{
+            ...other.slotProps,
+            input: {
+              ...other.slotProps?.input,
+              "aria-required": other.required,
+            },
+            formHelperText: {
+              ...other.slotProps?.formHelperText,
+              id: error ? `${name}-error-text` : `${name}-helper-text`,
+              role: error ? "alert" : undefined,
+            },
+          }}
           onChange={(e) => {
             const value = e.target.value;
-            // Convert to number if value is not empty, otherwise keep as empty string
             field.onChange(value === "" ? "" : Number(value));
           }}
           value={field.value ?? ""}

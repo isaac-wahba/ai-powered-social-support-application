@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { FormProvider } from "react-hook-form";
@@ -13,6 +13,7 @@ import { WizardStepper } from "./components/WizardStepper";
 import { WizardNavigation } from "./components/WizardNavigation";
 import { StartOverButton } from "./components/StartOverButton";
 import { SubmissionSuccessDialog } from "./components/SubmissionSuccessDialog";
+import { SkipLink } from "../../components/SkipLink";
 
 export function ApplicationWizard() {
   const { t } = useTranslation();
@@ -67,8 +68,11 @@ export function ApplicationWizard() {
     setActiveStep(ApplicationStep.PERSONAL_INFO);
   };
 
+  const mainContentRef = useRef<HTMLDivElement>(null);
+
   return (
     <FormProvider {...methods}>
+      <SkipLink href="#main-content">{t("skipToMainContent")}</SkipLink>
       <Container
         maxWidth="md"
         sx={{
@@ -79,6 +83,9 @@ export function ApplicationWizard() {
       >
         <Paper
           elevation={2}
+          component="main"
+          role="main"
+          aria-label={t("applicationForm")}
           sx={{
             p: { xs: 2, sm: 3, md: 4 },
           }}
@@ -112,6 +119,9 @@ export function ApplicationWizard() {
           <WizardStepper activeStep={activeStep} />
 
           <Box
+            id="main-content"
+            ref={mainContentRef}
+            tabIndex={-1}
             sx={{
               minHeight: { xs: 150, sm: 200 },
               mb: { xs: 3, sm: 4 },
@@ -120,6 +130,8 @@ export function ApplicationWizard() {
             {submissionError && (
               <Alert
                 severity="error"
+                role="alert"
+                aria-live="assertive"
                 onClose={clearSubmissionError}
                 sx={{ mb: 2 }}
               >

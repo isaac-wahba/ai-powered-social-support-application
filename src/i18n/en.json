@@ -83,5 +83,12 @@
   "submissionError": "Submission Failed",
   "submissionErrorMessage": "An error occurred while submitting your application. Please try again.",
   "fillNewApplication": "Fill New Application",
-  "goToHome": "Go to Home"
+  "goToHome": "Go to Home",
+  "skipToMainContent": "Skip to main content",
+  "applicationForm": "Application Form",
+  "applicationSteps": "Application Steps",
+  "step": "Step",
+  "submitApplication": "Submit Application",
+  "nextStep": "Go to next step",
+  "previousStep": "Go to previous step"
 }

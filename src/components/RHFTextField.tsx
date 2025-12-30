@@ -21,6 +21,24 @@ export function RHFTextField({ name, helperText, ...other }: RHFTextFieldProps) 
           error={!!error}
           helperText={error?.message || helperText}
           fullWidth
+          aria-invalid={!!error}
+          aria-describedby={
+            error || helperText
+              ? `${name}-${error ? "error" : "helper"}-text`
+              : undefined
+          }
+          slotProps={{
+            ...other.slotProps,
+            input: {
+              ...other.slotProps?.input,
+              "aria-required": other.required,
+            },
+            formHelperText: {
+              ...other.slotProps?.formHelperText,
+              id: error ? `${name}-error-text` : `${name}-helper-text`,
+              role: error ? "alert" : undefined,
+            },
+          }}
         />
       )}
     />

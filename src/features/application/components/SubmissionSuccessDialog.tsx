@@ -56,6 +56,7 @@ export function SubmissionSuccessDialog({
         >
           <CheckCircleIcon
             color="success"
+            aria-hidden="true"
             sx={{ fontSize: { xs: 28, sm: 32 } }}
           />
           <Typography
@@ -90,6 +91,7 @@ export function SubmissionSuccessDialog({
           variant="contained"
           color="primary"
           autoFocus
+          aria-label={t("fillNewApplication")}
           sx={{
             width: { xs: "100%", sm: "auto" },
             minHeight: { xs: "44px", sm: "auto" },
@@ -101,6 +103,7 @@ export function SubmissionSuccessDialog({
         <Button
           onClick={onGoToHome}
           variant="outlined"
+          aria-label={t("goToHome")}
           sx={{
             width: { xs: "100%", sm: "auto" },
             minHeight: { xs: "44px", sm: "auto" },
