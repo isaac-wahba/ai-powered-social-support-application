@@ -44,7 +44,6 @@ A modern, accessible, and user-friendly multi-step application form for social s
 - **[Security Guide](documentation/security.md)** - Security considerations and best practices
 - **[Development Guide](documentation/development.md)** - How to contribute and extend the project
 - **[Future Improvements](documentation/future-improvements.md)** - Roadmap and planned features
-- **[Implementation Plan](documentation/implementation-plan.md)** - Step-by-step implementation details
 
 ## 🚀 Quick Start
 
