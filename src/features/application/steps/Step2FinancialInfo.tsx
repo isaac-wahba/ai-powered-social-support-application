@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { RHFSelect } from "../../../components/RHFSelect";
@@ -7,27 +8,36 @@ import { StepLayout } from "./StepLayout";
 export function Step2FinancialInfo() {
   const { t } = useTranslation();
 
-  const maritalStatusOptions = [
-    { value: "single", label: t("maritalStatusSingle") },
-    { value: "married", label: t("maritalStatusMarried") },
-    { value: "divorced", label: t("maritalStatusDivorced") },
-    { value: "widowed", label: t("maritalStatusWidowed") },
-  ];
+  const maritalStatusOptions = useMemo(
+    () => [
+      { value: "single", label: t("maritalStatusSingle") },
+      { value: "married", label: t("maritalStatusMarried") },
+      { value: "divorced", label: t("maritalStatusDivorced") },
+      { value: "widowed", label: t("maritalStatusWidowed") },
+    ],
+    [t]
+  );
 
-  const employmentStatusOptions = [
-    { value: "employed", label: t("employmentStatusEmployed") },
-    { value: "unemployed", label: t("employmentStatusUnemployed") },
-    { value: "selfEmployed", label: t("employmentStatusSelfEmployed") },
-    { value: "student", label: t("employmentStatusStudent") },
-    { value: "retired", label: t("employmentStatusRetired") },
-  ];
+  const employmentStatusOptions = useMemo(
+    () => [
+      { value: "employed", label: t("employmentStatusEmployed") },
+      { value: "unemployed", label: t("employmentStatusUnemployed") },
+      { value: "selfEmployed", label: t("employmentStatusSelfEmployed") },
+      { value: "student", label: t("employmentStatusStudent") },
+      { value: "retired", label: t("employmentStatusRetired") },
+    ],
+    [t]
+  );
 
-  const housingStatusOptions = [
-    { value: "own", label: t("housingStatusOwn") },
-    { value: "rent", label: t("housingStatusRent") },
-    { value: "family", label: t("housingStatusFamily") },
-    { value: "other", label: t("housingStatusOther") },
-  ];
+  const housingStatusOptions = useMemo(
+    () => [
+      { value: "own", label: t("housingStatusOwn") },
+      { value: "rent", label: t("housingStatusRent") },
+      { value: "family", label: t("housingStatusFamily") },
+      { value: "other", label: t("housingStatusOther") },
+    ],
+    [t]
+  );
 
   return (
     <StepLayout stepKey="step2">
@@ -41,7 +51,9 @@ export function Step2FinancialInfo() {
       <RHFNumberField
         name="dependents"
         label={t("fieldDependents")}
-        inputProps={{ min: 0, step: 1 }}
+        slotProps={{
+          htmlInput: { min: 0, step: 1 },
+        }}
         required
       />
 
@@ -55,7 +67,9 @@ export function Step2FinancialInfo() {
       <RHFNumberField
         name="monthlyIncome"
         label={t("fieldMonthlyIncome")}
-        inputProps={{ min: 0, step: 0.01 }}
+        slotProps={{
+          htmlInput: { min: 0, step: 0.01 },
+        }}
         required
       />
 
@@ -70,4 +84,3 @@ export function Step2FinancialInfo() {
     </StepLayout>
   );
 }
-

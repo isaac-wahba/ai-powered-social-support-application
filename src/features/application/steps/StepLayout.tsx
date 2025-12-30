@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Box, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
@@ -6,7 +7,7 @@ interface StepLayoutProps {
   children: React.ReactNode;
 }
 
-export function StepLayout({ stepKey, children }: StepLayoutProps) {
+export const StepLayout = memo(({ stepKey, children }: StepLayoutProps) => {
   const { t } = useTranslation();
 
   return (
@@ -41,4 +42,4 @@ export function StepLayout({ stepKey, children }: StepLayoutProps) {
       </Box>
     </Box>
   );
-}
+});

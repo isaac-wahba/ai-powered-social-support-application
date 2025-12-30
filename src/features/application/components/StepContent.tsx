@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { ApplicationStep } from "../constants/steps";
 import { Step1PersonalInfo } from "../steps/Step1PersonalInfo";
 import { Step2FinancialInfo } from "../steps/Step2FinancialInfo";
@@ -10,7 +11,7 @@ interface StepContentProps {
 /**
  * Renders the appropriate step component based on the current step
  */
-export function StepContent({ step }: StepContentProps) {
+export const StepContent = memo(({ step }: StepContentProps) => {
   switch (step) {
     case ApplicationStep.PERSONAL_INFO:
       return <Step1PersonalInfo />;
@@ -21,4 +22,4 @@ export function StepContent({ step }: StepContentProps) {
     default:
       return null;
   }
-}
+});

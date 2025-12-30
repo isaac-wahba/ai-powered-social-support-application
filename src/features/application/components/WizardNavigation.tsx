@@ -80,7 +80,11 @@ export function WizardNavigation({
             aria-label={isSubmitting ? t("submitting") : t("submitApplication")}
             startIcon={
               isSubmitting ? (
-                <CircularProgress size={16} color="inherit" aria-hidden="true" />
+                <CircularProgress
+                  size={16}
+                  color="inherit"
+                  aria-hidden="true"
+                />
               ) : undefined
             }
             sx={{

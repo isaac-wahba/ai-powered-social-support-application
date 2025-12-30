@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Stepper, Step, StepLabel } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { ApplicationStep } from "../constants/steps";
@@ -11,7 +12,7 @@ interface WizardStepperProps {
 /**
  * Stepper component for the wizard
  */
-export function WizardStepper({ activeStep }: WizardStepperProps) {
+export const WizardStepper = memo(({ activeStep }: WizardStepperProps) => {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.language === "ar";
 
@@ -49,4 +50,4 @@ export function WizardStepper({ activeStep }: WizardStepperProps) {
       </Stepper>
     </nav>
   );
-}
+});
