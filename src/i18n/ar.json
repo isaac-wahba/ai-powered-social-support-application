@@ -75,5 +75,12 @@
   "startOver": "ابدأ من جديد",
   "startOverConfirm": "هل أنت متأكد أنك تريد البدء من جديد؟ سيتم مسح جميع تقدمك.",
   "cancel": "إلغاء",
-  "confirm": "تأكيد"
+  "confirm": "تأكيد",
+  "submit": "إرسال الطلب",
+  "submitting": "جاري الإرسال...",
+  "submissionSuccess": "تم إرسال الطلب بنجاح",
+  "submissionSuccessMessage": "شكراً لتقديمك. لقد استلمنا معلوماتك وسنراجعها قريباً.",
+  "submissionError": "فشل الإرسال",
+  "submissionErrorMessage": "حدث خطأ أثناء إرسال طلبك. يرجى المحاولة مرة أخرى.",
+  "close": "إغلاق"
 }

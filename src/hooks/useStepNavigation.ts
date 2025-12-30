@@ -31,7 +31,6 @@ export function useStepNavigation({
     const isValid = await trigger(fieldsToValidate);
 
     if (isValid) {
-      // Clear all validation errors when moving to next step
       clearErrors();
       const nextStep = (activeStep + 1) as ApplicationStep;
       setActiveStep(nextStep);
@@ -39,7 +38,6 @@ export function useStepNavigation({
   };
 
   const handleBack = () => {
-    // Clear all validation errors when moving to previous step
     clearErrors();
     const prevStep = (activeStep - 1) as ApplicationStep;
     setActiveStep(prevStep);

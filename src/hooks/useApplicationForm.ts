@@ -13,7 +13,6 @@ import { useFormAutoSave } from "./useFormAutoSave";
  * Custom hook for managing the application form state and persistence
  */
 export function useApplicationForm() {
-  // Load saved data on mount
   const savedData = storage.load();
   const initialValues = savedData
     ? { ...defaultValues, ...savedData }
@@ -27,16 +26,14 @@ export function useApplicationForm() {
 
   const { watch, reset } = methods;
 
-  // Auto-save with debounce
   useFormAutoSave(watch);
 
-  // Restore saved data on mount
   useEffect(() => {
     if (savedData) {
       reset(initialValues);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Only run once on mount
+  }, []);
 
   return methods;
 }

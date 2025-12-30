@@ -33,20 +33,13 @@ export function StartOverButton({
   };
 
   const handleConfirm = () => {
-    // Clear validation errors first
     clearErrors();
 
     // Clear only form data and step (not other storage data that might exist)
     storage.save({});
     storage.saveStep(ApplicationStep.PERSONAL_INFO);
-
-    // Reset form to default values
     resetForm(defaultValues);
-
-    // Reset to first step
     onStepReset();
-
-    // Close dialog
     setOpen(false);
   };
 
@@ -78,7 +71,6 @@ export function StartOverButton({
           "&:focus-visible": {
             outline: "none",
           },
-          // Ensure proper spacing between icon and text in RTL
           ...(isRTL && {
             "& .MuiButton-startIcon": {
               marginLeft: "8px !important",

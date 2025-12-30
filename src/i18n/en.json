@@ -75,5 +75,12 @@
   "startOver": "Start Over",
   "startOverConfirm": "Are you sure you want to start over? This will clear all your progress.",
   "cancel": "Cancel",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "submit": "Submit Application",
+  "submitting": "Submitting...",
+  "submissionSuccess": "Application Submitted Successfully",
+  "submissionSuccessMessage": "Thank you for your application. We have received your information and will review it shortly.",
+  "submissionError": "Submission Failed",
+  "submissionErrorMessage": "An error occurred while submitting your application. Please try again.",
+  "close": "Close"
 }

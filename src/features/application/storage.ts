@@ -46,7 +46,6 @@ export const storage = {
       const stored = localStorage.getItem(STEP_STORAGE_KEY);
       if (!stored) return null;
       const step = JSON.parse(stored) as number;
-      // Validate step is within valid range (0-2)
       if (
         step >= ApplicationStep.PERSONAL_INFO &&
         step <= ApplicationStep.SITUATION
