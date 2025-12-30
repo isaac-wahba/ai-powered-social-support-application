@@ -51,7 +51,7 @@ A modern, accessible, and user-friendly multi-step application form for social s
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/isaac-wahba/ai-powered-social-support-application.git
 cd social-support-portal
 ```
 
@@ -74,6 +74,10 @@ npm run dev
 ```
 
 For detailed setup instructions, see [Setup & Installation Guide](documentation/setup.md).
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📧 Contact
 
