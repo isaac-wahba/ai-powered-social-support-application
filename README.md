@@ -61,11 +61,13 @@ cd social-support-portal
 npm install
 ```
 
-3. Create a `.env` file:
+3. Create a `.env` file with your OpenAI API key:
 
 ```env
 VITE_OPENAI_API_KEY=your_openai_api_key_here
 ```
+
+Get your API key from [OpenAI Platform](https://platform.openai.com/api-keys)
 
 4. Start the development server:
 

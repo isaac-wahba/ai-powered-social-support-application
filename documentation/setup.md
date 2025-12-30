@@ -22,6 +22,17 @@ npm install
 
 ### 3. Environment Variables
 
+#### Getting an OpenAI API Key
+
+1. Go to [OpenAI Platform](https://platform.openai.com/)
+2. Sign up or log in to your account
+3. Navigate to [API Keys](https://platform.openai.com/api-keys)
+4. Click "Create new secret key"
+5. Give it a name (e.g., "Social Support Portal")
+6. Copy the API key (you won't be able to see it again)
+
+#### Setting Up the Environment Variable
+
 Create a `.env` file in the root directory:
 
 ```env
@@ -32,6 +43,7 @@ VITE_OPENAI_API_KEY=your_openai_api_key_here
 
 - Never commit the `.env` file to version control
 - Replace `your_openai_api_key_here` with your actual OpenAI API key
+- The API key starts with `sk-`
 - See [Security Guide](security.md) for more information about API key security
 
 ### 4. Start Development Server
