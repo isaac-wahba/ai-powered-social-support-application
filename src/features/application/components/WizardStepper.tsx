@@ -16,14 +16,26 @@ export function WizardStepper({ activeStep }: WizardStepperProps) {
   const isRTL = i18n.language === "ar";
 
   return (
-    <Stepper activeStep={activeStep} sx={{ mt: 4, mb: 4 }}>
+    <Stepper
+      activeStep={activeStep}
+      sx={{
+        mt: { xs: 2, sm: 4 },
+        mb: { xs: 2, sm: 4 },
+        "& .MuiStepLabel-root": {
+          "& .MuiStepLabel-label": {
+            fontSize: { xs: "0.75rem", sm: "0.875rem" },
+            marginLeft: isRTL ? 0 : "8px",
+            marginRight: isRTL ? "8px" : 0,
+          },
+        },
+      }}
+    >
       {STEP_LABELS.map((label) => (
         <Step key={label}>
           <StepLabel
             sx={{
               "& .MuiStepLabel-label": {
-                marginLeft: isRTL ? 0 : "8px",
-                marginRight: isRTL ? "8px" : 0,
+                display: { xs: "none", sm: "block" },
               },
             }}
           >

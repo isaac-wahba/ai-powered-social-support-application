@@ -39,9 +39,10 @@ export function WizardNavigation({
     <Box
       sx={{
         display: "flex",
-        flexDirection: isRTL ? "row-reverse" : "row",
+        flexDirection: { xs: "column", sm: isRTL ? "row-reverse" : "row" },
         justifyContent: "space-between",
-        alignItems: "center",
+        alignItems: { xs: "stretch", sm: "center" },
+        gap: { xs: 2, sm: 0 },
       }}
     >
       <Button
@@ -50,6 +51,8 @@ export function WizardNavigation({
         startIcon={<HomeIcon />}
         disabled={isSubmitting}
         sx={{
+          width: { xs: isLastStep ? "auto" : "100%", sm: "auto" },
+          minHeight: { xs: "44px", sm: "auto" },
           ...(isRTL && {
             "& .MuiButton-startIcon": {
               marginLeft: "8px !important",
@@ -64,7 +67,8 @@ export function WizardNavigation({
         sx={{
           display: "flex",
           flexDirection: "row",
-          gap: 2,
+          gap: { xs: 1.5, sm: 2 },
+          width: { xs: "100%", sm: "auto" },
         }}
       >
         {isLastStep ? (
@@ -77,6 +81,10 @@ export function WizardNavigation({
                 <CircularProgress size={16} color="inherit" />
               ) : undefined
             }
+            sx={{
+              width: { xs: "100%", sm: "auto" },
+              minHeight: { xs: "44px", sm: "auto" },
+            }}
           >
             {isSubmitting ? t("submitting") : t("submit")}
           </Button>
@@ -86,6 +94,10 @@ export function WizardNavigation({
               variant="contained"
               onClick={onNext}
               disabled={!canGoNext || isSubmitting}
+              sx={{
+                width: { xs: "100%", sm: "auto" },
+                minHeight: { xs: "44px", sm: "auto" },
+              }}
             >
               {t("next")}
             </Button>
@@ -93,6 +105,10 @@ export function WizardNavigation({
               disabled={!canGoBack || isSubmitting}
               onClick={onBack}
               variant="outlined"
+              sx={{
+                width: { xs: "100%", sm: "auto" },
+                minHeight: { xs: "44px", sm: "auto" },
+              }}
             >
               {t("back")}
             </Button>
@@ -103,6 +119,10 @@ export function WizardNavigation({
               disabled={!canGoBack || isSubmitting}
               onClick={onBack}
               variant="outlined"
+              sx={{
+                width: { xs: "100%", sm: "auto" },
+                minHeight: { xs: "44px", sm: "auto" },
+              }}
             >
               {t("back")}
             </Button>
@@ -110,6 +130,10 @@ export function WizardNavigation({
               variant="contained"
               onClick={onNext}
               disabled={!canGoNext || isSubmitting}
+              sx={{
+                width: { xs: "100%", sm: "auto" },
+                minHeight: { xs: "44px", sm: "auto" },
+              }}
             >
               {t("next")}
             </Button>

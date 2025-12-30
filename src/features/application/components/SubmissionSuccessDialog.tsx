@@ -6,6 +6,7 @@ import {
   DialogActions,
   Button,
   Box,
+  Typography,
 } from "@mui/material";
 import { CheckCircle as CheckCircleIcon } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
@@ -35,17 +36,37 @@ export function SubmissionSuccessDialog({
       aria-describedby="submission-success-dialog-description"
       maxWidth="sm"
       fullWidth
+      slotProps={{
+        paper: {
+          sx: {
+            m: { xs: 2, sm: 3 },
+            width: { xs: "calc(100% - 32px)", sm: "auto" },
+          },
+        },
+      }}
     >
       <DialogTitle id="submission-success-dialog-title">
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
-            gap: 2,
+            gap: { xs: 1.5, sm: 2 },
+            flexWrap: "wrap",
           }}
         >
-          <CheckCircleIcon color="success" sx={{ fontSize: 32 }} />
-          {t("submissionSuccess")}
+          <CheckCircleIcon
+            color="success"
+            sx={{ fontSize: { xs: 28, sm: 32 } }}
+          />
+          <Typography
+            variant="h6"
+            component="span"
+            sx={{
+              fontSize: { xs: "1rem", sm: "1.25rem" },
+            }}
+          >
+            {t("submissionSuccess")}
+          </Typography>
         </Box>
       </DialogTitle>
       <DialogContent>
@@ -55,8 +76,13 @@ export function SubmissionSuccessDialog({
       </DialogContent>
       <DialogActions
         sx={{
-          flexDirection: isRTL ? "row-reverse" : "row",
-          gap: 2,
+          flexDirection: {
+            xs: "column",
+            sm: isRTL ? "row-reverse" : "row",
+          },
+          gap: { xs: 1.5, sm: 2 },
+          px: { xs: 2, sm: 3 },
+          pb: { xs: 2, sm: 3 },
         }}
       >
         <Button
@@ -64,10 +90,23 @@ export function SubmissionSuccessDialog({
           variant="contained"
           color="primary"
           autoFocus
+          sx={{
+            width: { xs: "100%", sm: "auto" },
+            minHeight: { xs: "44px", sm: "auto" },
+            order: { xs: 1, sm: "unset" },
+          }}
         >
           {t("fillNewApplication")}
         </Button>
-        <Button onClick={onGoToHome} variant="outlined">
+        <Button
+          onClick={onGoToHome}
+          variant="outlined"
+          sx={{
+            width: { xs: "100%", sm: "auto" },
+            minHeight: { xs: "44px", sm: "auto" },
+            order: { xs: 2, sm: "unset" },
+          }}
+        >
           {t("goToHome")}
         </Button>
       </DialogActions>

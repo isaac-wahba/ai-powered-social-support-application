@@ -34,26 +34,31 @@ export function AIFieldWithButton({
       <Box
         sx={{
           display: "flex",
-          flexDirection: isRTL ? "row-reverse" : "row",
-          gap: 2,
-          alignItems: "flex-start",
+          flexDirection: {
+            xs: "column",
+            sm: isRTL ? "row-reverse" : "row",
+          },
+          gap: { xs: 1.5, sm: 2 },
+          alignItems: { xs: "stretch", sm: "flex-start" },
         }}
       >
-        <Box sx={{ flex: 1 }}>
-          <RHFTextarea
-            name={fieldName}
-            label={t(labelKey)}
-            rows={6}
-            required
+        <Box sx={{ flex: 1, width: "100%" }}>
+          <RHFTextarea name={fieldName} label={t(labelKey)} rows={6} required />
+        </Box>
+        <Box
+          sx={{
+            width: { xs: "100%", sm: "auto" },
+            display: "flex",
+            justifyContent: { xs: "flex-start", sm: "center" },
+          }}
+        >
+          <HelpMeWriteButton
+            loading={loading}
+            onClick={onGenerate}
+            disabled={disabled}
           />
         </Box>
-        <HelpMeWriteButton
-          loading={loading}
-          onClick={onGenerate}
-          disabled={disabled}
-        />
       </Box>
     </Box>
   );
 }
-

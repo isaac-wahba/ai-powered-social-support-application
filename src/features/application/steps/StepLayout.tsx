@@ -10,8 +10,14 @@ export function StepLayout({ stepKey, children }: StepLayoutProps) {
   const { t } = useTranslation();
 
   return (
-    <Box sx={{ mt: 3 }}>
-      <Typography variant="h6" gutterBottom>
+    <Box sx={{ mt: { xs: 2, sm: 3 } }}>
+      <Typography
+        variant="h6"
+        gutterBottom
+        sx={{
+          fontSize: { xs: "1rem", sm: "1.25rem" },
+        }}
+      >
         {t(stepKey)}
       </Typography>
       <Box
@@ -21,7 +27,7 @@ export function StepLayout({ stepKey, children }: StepLayoutProps) {
             xs: "1fr",
             sm: "repeat(2, 1fr)",
           },
-          gap: 3,
+          gap: { xs: 2, sm: 3 },
           mt: 1,
         }}
       >

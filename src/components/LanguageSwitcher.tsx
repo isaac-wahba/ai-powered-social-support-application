@@ -51,9 +51,11 @@ export function LanguageSwitcher() {
             },
           }}
           MenuProps={{
-            PaperProps: {
-              sx: {
-                mt: 1,
+            slotProps: {
+              paper: {
+                sx: {
+                  mt: 1,
+                },
               },
             },
           }}

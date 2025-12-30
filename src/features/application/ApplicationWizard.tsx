@@ -69,17 +69,37 @@ export function ApplicationWizard() {
 
   return (
     <FormProvider {...methods}>
-      <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
-        <Paper elevation={2} sx={{ p: 4 }}>
+      <Container
+        maxWidth="md"
+        sx={{
+          mt: { xs: 2, sm: 4 },
+          mb: { xs: 2, sm: 4 },
+          px: { xs: 1, sm: 2 },
+        }}
+      >
+        <Paper
+          elevation={2}
+          sx={{
+            p: { xs: 2, sm: 3, md: 4 },
+          }}
+        >
           <Box
             sx={{
               display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
               justifyContent: "space-between",
-              alignItems: "center",
+              alignItems: { xs: "flex-start", sm: "center" },
               mb: 2,
+              gap: { xs: 2, sm: 0 },
             }}
           >
-            <Typography variant="h4" component="h1">
+            <Typography
+              variant="h4"
+              component="h1"
+              sx={{
+                fontSize: { xs: "1.5rem", sm: "2rem" },
+              }}
+            >
               {t("welcome")}
             </Typography>
             <StartOverButton
@@ -91,7 +111,12 @@ export function ApplicationWizard() {
 
           <WizardStepper activeStep={activeStep} />
 
-          <Box sx={{ minHeight: 200, mb: 4 }}>
+          <Box
+            sx={{
+              minHeight: { xs: 150, sm: 200 },
+              mb: { xs: 3, sm: 4 },
+            }}
+          >
             {submissionError && (
               <Alert
                 severity="error"
