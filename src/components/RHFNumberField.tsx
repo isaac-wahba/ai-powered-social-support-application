@@ -45,6 +45,12 @@ export function RHFNumberField({
               role: error ? "alert" : undefined,
             },
           }}
+          {...(other.slotProps?.htmlInput && {
+            inputProps: {
+              min: (other.slotProps.htmlInput as { min?: number }).min,
+              step: (other.slotProps.htmlInput as { step?: number }).step,
+            },
+          })}
           onChange={(e) => {
             const value = e.target.value;
             field.onChange(value === "" ? "" : Number(value));
