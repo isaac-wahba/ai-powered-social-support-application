@@ -75,14 +75,6 @@ npm run dev
 
 For detailed setup instructions, see [Setup & Installation Guide](documentation/setup.md).
 
-## 📄 License
-
-[Add your license here]
-
-## 🤝 Contributing
-
-[Add contribution guidelines here]
-
 ## 📧 Contact
 
 GitHub: [@isaac-wahba](https://github.com/isaac-wahba)
