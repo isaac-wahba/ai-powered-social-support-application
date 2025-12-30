@@ -1,73 +1,92 @@
-# React + TypeScript + Vite
+# Social Support Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, accessible, and user-friendly multi-step application form for social support services. Built with React, TypeScript, and Material UI, featuring AI-assisted text generation, internationalization (English/Arabic with RTL support), and automatic progress persistence.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Core Functionality
 
-## React Compiler
+- **Multi-step Form Wizard**: Three-step application process with validation
+  - Step 1: Personal Information
+  - Step 2: Family & Financial Information
+  - Step 3: Situation Description
+- **AI-Assisted Writing**: OpenAI integration to help users write their application descriptions
+- **Progress Persistence**: Automatic saving to localStorage with step tracking
+- **Form Validation**: Real-time validation using React Hook Form and Zod
+- **Responsive Design**: Mobile-first design that works on all screen sizes
+- **Accessibility**: WCAG-compliant with skip links, ARIA attributes, and keyboard navigation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Internationalization
 
-## Expanding the ESLint configuration
+- **Bilingual Support**: English and Arabic
+- **RTL Support**: Automatic right-to-left layout for Arabic
+- **Dynamic Language Switching**: Change language at any time
+- **Localized Content**: All UI text and form labels translated
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### User Experience
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Continue Application**: Smart detection of in-progress applications
+- **Start Over**: Option to clear and restart the application
+- **Success Dialog**: Clear feedback after submission with options to start new application or go home
+- **Error Handling**: User-friendly error messages and validation feedback
+- **Loading States**: Visual feedback during AI generation and form submission
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Performance
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **Code Splitting**: Lazy loading of routes and components
+- **Optimized Re-renders**: React.memo and useMemo for performance
+- **Debounced Auto-save**: Efficient localStorage writes
+
+## 📚 Documentation
+
+- **[Setup & Installation](documentation/setup.md)** - Get started with the project
+- **[Architecture](documentation/architecture.md)** - Project structure and design decisions
+- **[Security Guide](documentation/security.md)** - Security considerations and best practices
+- **[Development Guide](documentation/development.md)** - How to contribute and extend the project
+- **[Future Improvements](documentation/future-improvements.md)** - Roadmap and planned features
+- **[Implementation Plan](documentation/implementation-plan.md)** - Step-by-step implementation details
+
+## 🚀 Quick Start
+
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd social-support-portal
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Install dependencies:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+3. Create a `.env` file:
+
+```env
+VITE_OPENAI_API_KEY=your_openai_api_key_here
+```
+
+4. Start the development server:
+
+```bash
+npm run dev
+```
+
+For detailed setup instructions, see [Setup & Installation Guide](documentation/setup.md).
+
+## 📄 License
+
+[Add your license here]
+
+## 🤝 Contributing
+
+[Add contribution guidelines here]
+
+## 📧 Contact
+
+[Add contact information here]
+
+---
+
+**Built with ❤️ using React, TypeScript, and Material UI**
