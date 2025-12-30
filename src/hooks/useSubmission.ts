@@ -27,6 +27,7 @@ interface UseSubmissionReturn {
   submissionError: string | null;
   handleSubmit: () => Promise<void>;
   handleCloseSuccessDialog: () => void;
+  handleStartNewApplication: () => void;
   clearSubmissionError: () => void;
 }
 
@@ -88,6 +89,14 @@ export function useSubmission({
     setShowSuccessDialog(false);
   };
 
+  const handleStartNewApplication = () => {
+    setShowSuccessDialog(false);
+    storage.clear();
+    reset(defaultValues);
+    clearErrors();
+    setActiveStep(ApplicationStep.PERSONAL_INFO);
+  };
+
   const clearSubmissionError = () => {
     setSubmissionError(null);
   };
@@ -98,6 +107,7 @@ export function useSubmission({
     submissionError,
     handleSubmit,
     handleCloseSuccessDialog,
+    handleStartNewApplication,
     clearSubmissionError,
   };
 }

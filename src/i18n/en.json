@@ -82,5 +82,6 @@
   "submissionSuccessMessage": "Thank you for your application. We have received your information and will review it shortly.",
   "submissionError": "Submission Failed",
   "submissionErrorMessage": "An error occurred while submitting your application. Please try again.",
-  "close": "Close"
+  "fillNewApplication": "Fill New Application",
+  "goToHome": "Go to Home"
 }

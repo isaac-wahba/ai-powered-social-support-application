@@ -82,5 +82,6 @@
   "submissionSuccessMessage": "شكراً لتقديمك. لقد استلمنا معلوماتك وسنراجعها قريباً.",
   "submissionError": "فشل الإرسال",
   "submissionErrorMessage": "حدث خطأ أثناء إرسال طلبك. يرجى المحاولة مرة أخرى.",
-  "close": "إغلاق"
+  "fillNewApplication": "ملء طلب جديد",
+  "goToHome": "الذهاب إلى الصفحة الرئيسية"
 }

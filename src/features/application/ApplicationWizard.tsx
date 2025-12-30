@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { FormProvider } from "react-hook-form";
 import { Container, Box, Paper, Typography, Alert } from "@mui/material";
 import { storage } from "./storage";
@@ -15,6 +16,7 @@ import { SubmissionSuccessDialog } from "./components/SubmissionSuccessDialog";
 
 export function ApplicationWizard() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const savedStep = storage.loadStep();
   const [activeStep, setActiveStep] = useState<ApplicationStep>(
@@ -36,6 +38,7 @@ export function ApplicationWizard() {
     submissionError,
     handleSubmit,
     handleCloseSuccessDialog,
+    handleStartNewApplication,
     clearSubmissionError,
   } = useSubmission({
     trigger: methods.trigger,
@@ -44,6 +47,11 @@ export function ApplicationWizard() {
     clearErrors: methods.clearErrors,
     setActiveStep,
   });
+
+  const handleGoToHome = () => {
+    handleCloseSuccessDialog();
+    navigate("/");
+  };
 
   useEffect(() => {
     storage.saveStep(activeStep);
@@ -110,7 +118,8 @@ export function ApplicationWizard() {
 
       <SubmissionSuccessDialog
         open={showSuccessDialog}
-        onClose={handleCloseSuccessDialog}
+        onFillNewApplication={handleStartNewApplication}
+        onGoToHome={handleGoToHome}
       />
     </FormProvider>
   );

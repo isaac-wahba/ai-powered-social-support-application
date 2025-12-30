@@ -12,7 +12,8 @@ import { useTranslation } from "react-i18next";
 
 interface SubmissionSuccessDialogProps {
   open: boolean;
-  onClose: () => void;
+  onFillNewApplication: () => void;
+  onGoToHome: () => void;
 }
 
 /**
@@ -20,14 +21,16 @@ interface SubmissionSuccessDialogProps {
  */
 export function SubmissionSuccessDialog({
   open,
-  onClose,
+  onFillNewApplication,
+  onGoToHome,
 }: SubmissionSuccessDialogProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === "ar";
 
   return (
     <Dialog
       open={open}
-      onClose={onClose}
+      onClose={onGoToHome}
       aria-labelledby="submission-success-dialog-title"
       aria-describedby="submission-success-dialog-description"
       maxWidth="sm"
@@ -50,12 +53,24 @@ export function SubmissionSuccessDialog({
           {t("submissionSuccessMessage")}
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} variant="contained" color="primary" autoFocus>
-          {t("close")}
+      <DialogActions
+        sx={{
+          flexDirection: isRTL ? "row-reverse" : "row",
+          gap: 2,
+        }}
+      >
+        <Button
+          onClick={onFillNewApplication}
+          variant="contained"
+          color="primary"
+          autoFocus
+        >
+          {t("fillNewApplication")}
+        </Button>
+        <Button onClick={onGoToHome} variant="outlined">
+          {t("goToHome")}
         </Button>
       </DialogActions>
     </Dialog>
   );
 }
-
