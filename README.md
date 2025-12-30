@@ -85,7 +85,7 @@ For detailed setup instructions, see [Setup & Installation Guide](documentation/
 
 ## 📧 Contact
 
-[Add contact information here]
+GitHub: [@isaac-wahba](https://github.com/isaac-wahba)
 
 ---
 
