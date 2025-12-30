@@ -58,4 +58,37 @@ export const storage = {
       return null;
     }
   },
+
+  hasInProgressApplication: (): boolean => {
+    try {
+      const savedStep = storage.loadStep();
+      // If user has progressed beyond the first step, they have an application in progress
+      if (savedStep !== null && savedStep > ApplicationStep.PERSONAL_INFO) {
+        return true;
+      }
+
+      const savedData = storage.load();
+      if (!savedData) return false;
+
+      // Check if saved data is an empty object (happens when "Start Over" is used)
+      if (Object.keys(savedData).length === 0) {
+        return false;
+      }
+
+      // Check if there's any meaningful data (non-empty strings, non-zero numbers)
+      const hasData = Object.values(savedData).some((value) => {
+        if (typeof value === "string") return value.trim() !== "";
+        if (typeof value === "number") return value !== 0;
+        if (typeof value === "object" && value !== null) {
+          return Object.keys(value).length > 0;
+        }
+        return false;
+      });
+
+      return hasData;
+    } catch (error) {
+      console.error("Failed to check in-progress application:", error);
+      return false;
+    }
+  },
 };

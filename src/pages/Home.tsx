@@ -14,10 +14,16 @@ import {
   Save as SaveIcon,
   SmartToy as SmartToyIcon,
 } from "@mui/icons-material";
+import { storage } from "../features/application/storage";
 
 export function Home() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  const hasExistingApplication = storage.hasInProgressApplication();
+  const buttonLabel = hasExistingApplication
+    ? t("continueApplication")
+    : t("startApplication");
 
   const features = [
     {
@@ -95,7 +101,7 @@ export function Home() {
                 fontWeight: 600,
               }}
             >
-              {t("startApplication")}
+              {buttonLabel}
             </Button>
           </Box>
         </Paper>
