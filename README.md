@@ -42,7 +42,6 @@ A modern, accessible, and user-friendly multi-step application form for social s
 - **[Setup & Installation](documentation/setup.md)** - Complete setup guide including local development with API server
 - **[Architecture](documentation/architecture.md)** - Project structure and design decisions
 - **[Development Guide](documentation/development.md)** - How to contribute and extend the project
-- **[Future Improvements](documentation/future-improvements.md)** - Roadmap and planned features
 
 ## 🚀 Quick Start
 
