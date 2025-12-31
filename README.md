@@ -40,9 +40,12 @@ A modern, accessible, and user-friendly multi-step application form for social s
 ## 📚 Documentation
 
 - **[Setup & Installation](documentation/setup.md)** - Get started with the project
+- **[Local Development Guide](documentation/local-development.md)** - Detailed guide for local development with API server
 - **[Architecture](documentation/architecture.md)** - Project structure and design decisions
-- **[Security Guide](documentation/security.md)** - Security considerations and best practices
 - **[Development Guide](documentation/development.md)** - How to contribute and extend the project
+- **[Security Guide](documentation/security.md)** - Security considerations and best practices
+- **[Vercel Setup Guide](documentation/vercel-setup.md)** - Deploy and configure on Vercel
+- **[Implementation Plan](documentation/implementation-plan.md)** - Project implementation details
 - **[Future Improvements](documentation/future-improvements.md)** - Roadmap and planned features
 
 ## 🚀 Quick Start
@@ -60,21 +63,33 @@ cd social-support-portal
 npm install
 ```
 
-3. Create a `.env` file with your OpenAI API key:
+3. Create a `.env.local` file with your OpenAI API key:
 
 ```env
-VITE_OPENAI_API_KEY=your_openai_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
 ```
+
+**Important:**
+
+- Use `.env.local` (not `.env`)
+- No `VITE_` prefix (this is server-side only)
+- No quotes around the value
+- No spaces around the `=`
 
 Get your API key from [OpenAI Platform](https://platform.openai.com/api-keys)
 
-4. Start the development server:
+4. Start the development servers:
 
 ```bash
 npm run dev
 ```
 
-For detailed setup instructions, see [Setup & Installation Guide](documentation/setup.md).
+This starts both the API server (port 8000) and the Vite dev server (port 5173).
+
+For detailed setup instructions, see:
+
+- [Setup & Installation Guide](documentation/setup.md)
+- [Local Development Guide](documentation/local-development.md) - Detailed local development setup
 
 ## 🤝 Contributing
 

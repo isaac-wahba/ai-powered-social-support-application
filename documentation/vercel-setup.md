@@ -189,3 +189,4 @@ If you encounter issues:
 2. Check browser console for client-side errors
 3. Verify environment variables are set correctly
 4. Review the [Vercel Documentation](https://vercel.com/docs)
+
