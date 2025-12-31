@@ -42,10 +42,7 @@ A modern, accessible, and user-friendly multi-step application form for social s
 - **[Setup & Installation](documentation/setup.md)** - Complete setup guide including local development with API server
 - **[Architecture](documentation/architecture.md)** - Project structure and design decisions
 - **[Development Guide](documentation/development.md)** - How to contribute and extend the project
-- **[Security Guide](documentation/security.md)** - Security considerations and best practices
-- **[Vercel Setup Guide](documentation/vercel-setup.md)** - Deploy and configure on Vercel
 - **[Future Improvements](documentation/future-improvements.md)** - Roadmap and planned features
-- **[Features Documentation](documentation/features/README.md)** - Detailed documentation for each feature
 
 ## 🚀 Quick Start
 
