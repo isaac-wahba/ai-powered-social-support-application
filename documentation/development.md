@@ -202,4 +202,3 @@ export const STEP_FIELDS = {
 - Check existing code for patterns
 - Review [Architecture Documentation](architecture.md)
 - See [Setup Guide](setup.md) for setup and troubleshooting
-- Check [Features Documentation](features/README.md) for feature-specific details
