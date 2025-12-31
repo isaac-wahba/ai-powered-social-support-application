@@ -6,74 +6,59 @@ This document outlines security considerations, best practices, and recommendati
 
 ### Current Implementation
 
-The application currently uses the OpenAI API key directly in the client-side code via the `VITE_OPENAI_API_KEY` environment variable.
+The application uses a **serverless function proxy** to securely handle OpenAI API calls. The API key is stored server-side only and never exposed to the client.
 
-**This is acceptable for:**
-- Development and local testing
-- Demos and prototypes
-- Internal tools
+**Architecture:**
 
-**This is NOT acceptable for:**
-- Production applications with public access
-- Applications handling sensitive data
-- Applications with multiple users
+```
+Client → /api/generate-text (Vercel Serverless Function) → OpenAI API
+```
 
-### Security Risks
+**Security Features:**
 
-1. **API Key Exposure**: The API key is visible in the client-side bundle
-2. **Unauthorized Usage**: Anyone can extract and misuse your API key
-3. **Cost Control**: No way to limit or monitor API usage per user
-4. **Rate Limiting**: Client-side rate limiting can be bypassed
+- ✅ API key stored in Vercel environment variables (server-side only)
+- ✅ Rate limiting: 10 requests per minute per IP
+- ✅ Input validation and guardrails
+- ✅ Server-controlled model (prevents expensive model requests)
+- ✅ No CORS wildcard (same-origin only)
+- ✅ Request timeout: 15 seconds
 
 ### Best Practices
 
 #### 1. Never Commit API Keys
 
-- ✅ The `.env` file is already in `.gitignore`
+- ✅ The `.env.local` file is already in `.gitignore`
 - ✅ Never share your API key publicly
 - ✅ Use environment variables for all sensitive data
 - ✅ Rotate keys if accidentally exposed
 
 #### 2. Production Deployment
 
-**For production, implement a backend proxy:**
+**Current Implementation: Vercel Serverless Function**
 
-```
-Client → Backend API → OpenAI API
-```
+The application uses a Vercel serverless function (`/api/generate-text`) that:
 
-**Benefits:**
-- API key stays on the server
-- Rate limiting and usage monitoring
-- Cost control and quotas
-- Request logging and analytics
+- Stores API key in Vercel environment variables (server-side only)
+- Implements rate limiting (10 requests/minute per IP)
+- Validates and sanitizes all inputs
+- Controls model selection server-side
+- Handles errors securely without exposing internals
 
-**Implementation Options:**
-- **Serverless Functions**: Vercel, Netlify, AWS Lambda
-- **API Routes**: Next.js API routes, Express.js
-- **Backend Service**: Node.js, Python, etc.
+**Rate Limiting:**
 
-**Example Backend Proxy Structure:**
-```typescript
-// Backend API endpoint
-POST /api/generate-text
-Body: { fieldName, context, language }
-Response: { text: string }
+- **Limit**: 10 requests per minute per IP address
+- **Window**: 60 seconds (sliding window)
+- **Storage**: In-memory (resets on cold starts)
+- **Note**: For high-traffic production, consider Vercel KV or Redis for distributed rate limiting
 
-// Backend handles:
-// - API key management
-// - Rate limiting
-// - Error handling
-// - Logging
-```
+**Input Validation:**
 
-#### 3. Rate Limiting
-
-Implement rate limiting on the backend:
-- Limit requests per user/IP
-- Set daily/monthly quotas
-- Monitor usage patterns
-- Alert on suspicious activity
+- Message count limited to 10
+- Message length limited to 4000 characters
+- Model hardcoded to `gpt-3.5-turbo` (server-controlled)
+- `max_tokens` clamped between 50-500
+- `temperature` clamped between 0-1
+- Role validation (system/user/assistant only)
 
 #### 4. API Key Management
 
@@ -94,12 +79,14 @@ Implement rate limiting on the backend:
 ### Privacy Considerations
 
 1. **LocalStorage Limitations**:
+
    - Data is device/browser-specific
    - Can be cleared by user
    - Not accessible across devices
    - Limited storage capacity
 
 2. **Data Sent to OpenAI**:
+
    - Form context is sent to OpenAI API for text generation
    - Review OpenAI's data usage policy
    - Consider data anonymization
@@ -114,18 +101,21 @@ Implement rate limiting on the backend:
 ### Recommendations for Production
 
 1. **Backend Storage**:
+
    - Store form data on secure backend
    - Encrypt sensitive data at rest
    - Implement proper access controls
    - Regular security audits
 
 2. **Data Minimization**:
+
    - Only collect necessary data
    - Anonymize data when possible
    - Implement data retention policies
    - Allow users to delete their data
 
 3. **Encryption**:
+
    - Use HTTPS for all communications
    - Encrypt sensitive data in transit
    - Encrypt sensitive data at rest
@@ -141,27 +131,33 @@ Implement rate limiting on the backend:
 
 ### Development
 
-Create a `.env` file in the root directory:
+For local development with Vercel CLI, create a `.env.local` file:
 
 ```env
-VITE_OPENAI_API_KEY=sk-your-key-here
+OPENAI_API_KEY=sk-your-key-here
 ```
+
+**Note**: Use `.env.local` (not `.env`) for Vercel CLI compatibility.
 
 ### Production
 
-Use secure environment variable management:
+**Vercel Environment Variables:**
 
-**Options:**
-- Platform environment variables (Vercel, Netlify, etc.)
-- Secret management services (AWS Secrets Manager, HashiCorp Vault)
-- CI/CD pipeline secrets
-- Kubernetes secrets
+1. Go to Vercel Dashboard → Your Project → Settings → Environment Variables
+2. Add `OPENAI_API_KEY` with your API key value
+3. Select all environments (Production, Preview, Development)
+4. Never commit `.env.local` to version control
 
-**Never:**
-- Hardcode secrets in source code
-- Commit `.env` files
-- Share secrets in chat/email
-- Store secrets in client-side code
+**Best Practices:**
+
+- ✅ Use platform environment variables (Vercel, Netlify, etc.)
+- ✅ Rotate keys regularly
+- ✅ Use separate keys for development and production
+- ✅ Monitor API usage and costs
+- ❌ Never hardcode secrets in source code
+- ❌ Never commit `.env` files
+- ❌ Never share secrets in chat/email
+- ❌ Never store secrets in client-side code
 
 ## Input Validation
 
@@ -172,13 +168,22 @@ Use secure environment variable management:
 - Sanitize user inputs
 - Validate data before sending to API
 
-### Server-Side Validation (Future)
+### Server-Side Validation (Current Implementation)
 
-When implementing backend:
-- Validate all inputs on the server
-- Never trust client-side validation alone
-- Sanitize inputs to prevent injection attacks
-- Use parameterized queries for databases
+The serverless function validates all inputs:
+
+- **Message validation**: Count (max 10), length (max 4000 chars), role (system/user/assistant only)
+- **Type validation**: Ensures `content` is a string, `role` is valid enum
+- **Parameter clamping**: `max_tokens` (50-500), `temperature` (0-1)
+- **Model control**: Server hardcodes model to prevent expensive requests
+- **Request structure**: Validates request body structure before processing
+
+**Best Practices:**
+
+- ✅ Validate all inputs on the server
+- ✅ Never trust client-side validation alone
+- ✅ Sanitize inputs to prevent injection attacks
+- ✅ Use type-safe interfaces for request/response
 
 ## HTTPS and Secure Communication
 
@@ -228,12 +233,13 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; 
 
 ### Before Production Deployment
 
-- [ ] Move OpenAI API key to backend proxy
-- [ ] Implement rate limiting
+- [x] Move OpenAI API key to backend proxy (serverless function)
+- [x] Implement rate limiting (10 req/min per IP)
+- [x] Implement input validation (messages, parameters)
+- [x] Server-controlled model selection
 - [ ] Set up monitoring and alerts
-- [ ] Use HTTPS
+- [x] Use HTTPS (Vercel provides by default)
 - [ ] Review and update dependencies
-- [ ] Implement input validation
 - [ ] Set up error logging (without exposing sensitive data)
 - [ ] Review data privacy compliance
 - [ ] Implement authentication (if needed)
@@ -260,4 +266,3 @@ If you discover a security vulnerability:
 ---
 
 **Remember**: Security is an ongoing process, not a one-time setup. Regularly review and update your security practices.
-

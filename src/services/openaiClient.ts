@@ -1,8 +1,8 @@
 import type { ApplicationFormData } from "../features/application/schema";
 import { buildPrompt } from "./prompts/promptBuilder";
 
-const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
-const DEFAULT_TIMEOUT = 30000; // 30 seconds
+const API_ENDPOINT = "/api/generate-text";
+const DEFAULT_TIMEOUT = 15000; // 15 seconds - matches API timeout
 
 export interface OpenAIError {
   message: string;
@@ -21,15 +21,6 @@ export interface GenerateTextParams {
 export async function generateTextWithAI(
   params: GenerateTextParams
 ): Promise<string> {
-  const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
-
-  if (!apiKey) {
-    throw {
-      message: "OpenAI API key is not configured",
-      type: "api_key" as const,
-    } as OpenAIError;
-  }
-
   const { systemMessage, userPrompt } = buildPrompt({
     fieldType: params.fieldType,
     formData: params.formData,
@@ -40,11 +31,10 @@ export async function generateTextWithAI(
   const timeoutId = setTimeout(() => controller.abort(), DEFAULT_TIMEOUT);
 
   try {
-    const response = await fetch(OPENAI_API_URL, {
+    const response = await fetch(API_ENDPOINT, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
@@ -67,7 +57,9 @@ export async function generateTextWithAI(
     clearTimeout(timeoutId);
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
+      const errorData = (await response.json().catch(() => ({}))) as {
+        error?: string;
+      };
 
       if (response.status === 401) {
         throw {
@@ -77,20 +69,31 @@ export async function generateTextWithAI(
       }
 
       if (response.status === 429) {
+        const retryAfter = response.headers.get("Retry-After");
+        const retrySeconds = retryAfter ? parseInt(retryAfter, 10) : 60;
         throw {
-          message: "Rate limit exceeded. Please try again later.",
+          message: `Rate limit exceeded. Please try again in ${retrySeconds} second${
+            retrySeconds !== 1 ? "s" : ""
+          }.`,
           type: "rate_limit" as const,
         } as OpenAIError;
       }
 
+      if (response.status === 408) {
+        throw {
+          message: "Request timed out. Please try again.",
+          type: "timeout" as const,
+        } as OpenAIError;
+      }
+
       throw {
-        message: errorData.error?.message || "Failed to generate text",
+        message: errorData.error || "Failed to generate text",
         type: "unknown" as const,
       } as OpenAIError;
     }
 
-    const data = await response.json();
-    const generatedText = data.choices?.[0]?.message?.content?.trim() || "";
+    const data = (await response.json()) as { text?: string };
+    const generatedText = data.text?.trim() || "";
 
     if (!generatedText) {
       throw {
