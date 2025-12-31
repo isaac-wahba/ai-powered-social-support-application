@@ -191,15 +191,15 @@ export const STEP_FIELDS = {
 1. **Form not saving**: Check localStorage in DevTools
 2. **Validation errors**: Check Zod schema and error messages
 3. **RTL layout issues**: Check theme direction and MUI RTL support
-4. **AI not working**: 
+4. **AI not working**:
    - Check that both API server and Vite are running (`npm run dev`)
    - Verify `.env.local` exists with `OPENAI_API_KEY`
    - Check browser console and network tab for errors
-   - See [Local Development Guide](local-development.md) for troubleshooting
+   - See [Setup Guide](setup.md) for troubleshooting
 
 ## Questions?
 
 - Check existing code for patterns
 - Review [Architecture Documentation](architecture.md)
-- Check [Implementation Plan](implementation-plan.md) for context
-- See [Local Development Guide](local-development.md) for setup and troubleshooting
+- See [Setup Guide](setup.md) for setup and troubleshooting
+- Check [Features Documentation](features/README.md) for feature-specific details
