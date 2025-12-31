@@ -39,14 +39,13 @@ A modern, accessible, and user-friendly multi-step application form for social s
 
 ## 📚 Documentation
 
-- **[Setup & Installation](documentation/setup.md)** - Get started with the project
-- **[Local Development Guide](documentation/local-development.md)** - Detailed guide for local development with API server
+- **[Setup & Installation](documentation/setup.md)** - Complete setup guide including local development with API server
 - **[Architecture](documentation/architecture.md)** - Project structure and design decisions
 - **[Development Guide](documentation/development.md)** - How to contribute and extend the project
 - **[Security Guide](documentation/security.md)** - Security considerations and best practices
 - **[Vercel Setup Guide](documentation/vercel-setup.md)** - Deploy and configure on Vercel
-- **[Implementation Plan](documentation/implementation-plan.md)** - Project implementation details
 - **[Future Improvements](documentation/future-improvements.md)** - Roadmap and planned features
+- **[Features Documentation](documentation/features/README.md)** - Detailed documentation for each feature
 
 ## 🚀 Quick Start
 
@@ -88,8 +87,7 @@ This starts both the API server (port 8000) and the Vite dev server (port 5173).
 
 For detailed setup instructions, see:
 
-- [Setup & Installation Guide](documentation/setup.md)
-- [Local Development Guide](documentation/local-development.md) - Detailed local development setup
+- [Setup & Installation Guide](documentation/setup.md) - Complete setup including local development
 
 ## 🤝 Contributing
 
