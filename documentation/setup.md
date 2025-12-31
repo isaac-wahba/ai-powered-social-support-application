@@ -58,8 +58,6 @@ OPENAI_API_KEY=sk-your-actual-api-key-here
 - ✅ The API key starts with `sk-`
 - ✅ Restart the dev server after creating/modifying `.env.local`
 
-See [Security Guide](security.md) for more information about API key security.
-
 ### 4. Start Development Servers
 
 Run both servers concurrently:
@@ -332,6 +330,3 @@ The API endpoint path (`/api/generate-text`) is the same in both environments, s
 
 - Read the [Architecture Guide](architecture.md) to understand the project structure
 - Check the [Development Guide](development.md) for how to extend the project
-- Review [Security Guide](security.md) for security best practices
-- See [Vercel Setup Guide](vercel-setup.md) for deployment instructions
-- Explore [Features Documentation](features/README.md) for detailed feature documentation
