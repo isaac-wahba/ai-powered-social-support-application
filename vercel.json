@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/generate-text.ts": {
+      "maxDuration": 30
+    }
+  }
+}
