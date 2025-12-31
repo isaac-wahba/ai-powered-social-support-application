@@ -62,7 +62,7 @@ function getClientIdentifier(req: VercelRequest): string {
     return req.socket.remoteAddress;
   }
 
-  return "unknown";
+  return "local";
 }
 
 /**
